@@ -54,22 +54,14 @@ POPULATIONS = {
 }
 
 #helper methods
-def category_exists(category: str) -> bool:
-    for row in POINT_VALUES:
-        if (str(category) == str(row[0])):
-            return True
-    return False
 
-def point_value_lookup(category:str) -> int:
-    return POINT_VALUES[category]
-
-def points_calculator(categories: list) -> int:
+def points_calculator(categories: list) -> int: #given list of categories, returns total points earned for event
     total: int = 0
     for item in categories:
-        total += int(point_value_lookup(item))
+        total += int(POINT_VALUES[item])
     return total
 
-def attendance_to_points(community: str, att: int) -> int:
+def attendance_to_points(community: str, att: int) -> int: #given an attendance amount, returns points earned from event depending on percent of hall population that attended
     if(att == 0 or att == -1):
         return 0
     percent: float = 0.0
@@ -86,13 +78,14 @@ def attendance_to_points(community: str, att: int) -> int:
     print("10 points were added from attandence")
     return 10
 
-def list_to_string(categories_list: list[str]) -> str:
+def list_to_string(categories_list: list[str]) -> str: #converts list to string in order to enter in excel cell since cell cannot take list
     categories_string = ""
     for item in categories_list:
         categories_string += item
         categories_string += ", "
     return categories_string
 
+#main method that creates tkinter window and updates excel workbook
 def adding_proposal_to_excel():
     #important fields
     community: str
@@ -155,8 +148,7 @@ def adding_proposal_to_excel():
     #l.pack(side = RIGHT)
 
     def print_selection():
-        if(enter.get() == 1):
-            #l.config(text='done')
+        if(enter.get() == 1): #when enter is pressed, updates excel sheet and closes window
             event_name = inputtxt.get(1.0, "end-1c")
             date = cal.get_date()
             community = clicked.get()
@@ -169,97 +161,81 @@ def adding_proposal_to_excel():
             data = [date, event_name, list_to_string(list_of_categories), attendance, point_total]
             for col, value in enumerate(data, start=1):
                 sheet.cell(row=next_row, column=col).value = value
-            #sheet.append([date, event_name, list_to_string(category_list), attendance, point_total])
             wb.save("RHAexcelTest.xlsx")
             window.destroy()
             
-        else:
+        else:  #each if statement is for state of checkbox, if pressed then it turns green and adds it to list
             if(early.get() == 1):
-                #l.config(text="Early Proposal")
                 list_of_categories.append("Early Proposal")
                 early.set(0)
                 C_early["bg"] = "green"
                 
             if(social.get() == 1):
-                #l.config(text="SOCIAL")
                 list_of_categories.append("Social")
                 social.set(0)
                 C_social["bg"] = "green"
 
             if(edu.get() == 1):
-                #l.config(text='educational')
                 list_of_categories.append("Educational")
                 edu.set(0)
                 C_edu["bg"] = "green"
 
             if(socjus.get() == 1):
-                #l.config(text='Social Justice')
                 list_of_categories.append("Social Justice")
                 socjus.set(0)
                 C_socjus["bg"] = "green"
 
             if(trad.get() == 1):
-                #l.config(text='Traditional')
                 list_of_categories.append("Traditional")
                 trad.set(0)
                 C_trad["bg"] = "green"
 
             if(ra_collab.get() == 1):
-                #l.config(text='RA Collab')
                 list_of_categories.append("RA Collab")
                 ra_collab.set(0)
                 C_ra_collab["bg"] = "green"
             
             if(co_collab2.get() == 1):
-                #l.config(text='Community Collab: 2')
                 list_of_categories.append("Community Collab: 2")
                 co_collab2.set(0)
                 C_co_collab2["bg"] = "green"
             
             if(byo.get() == 1):
-                #l.config(text='BYO')
                 list_of_categories.append("BYO")
                 byo.set(0)
                 C_byo["bg"] = "green"
 
             if(diy.get() == 1):
-                #l.config(text='DIY Craft')
                 list_of_categories.append("DIY Craft")
                 diy.set(0)
                 C_diy["bg"] = "green"
             
             if(passive.get() == 1):
-                #l.config(text='Passive Program')
                 list_of_categories.append("Passive Program")
                 passive.set(0)
                 C_passive["bg"] = "green"
 
             if(smpost.get() == 1):
-                #l.config(text='Social Media Post')
                 list_of_categories.append("Social Media Post")
                 smpost.set(0)
                 C_smpost["bg"] = "green"
 
             if(flyer.get() == 1):
-                #l.config(text='Poster/Flyer')
                 list_of_categories.append("Poster/Flyer")
                 flyer.set(0)
                 C_flyer["bg"] = "green"
 
             if(heel_life.get() == 1):
-                #l.config(text='Heel Life Post')
                 list_of_categories.append("HeelLife Post")
                 heel_life.set(0)
                 C_heel_life["bg"] = "green"
 
             if(email.get() == 1):
-                #l.config(text='Email Listserv')
                 list_of_categories.append("Email Listserv")
                 email.set(0)
                 C_email["bg"] = "green"
             
             if(bog_guest.get() == 1):
-                #l.config(text='Guest at BOG')
                 list_of_categories.append("Guest at BOG")
                 bog_guest.set(0)
                 C_bog_guest["bg"] = "green"
@@ -288,10 +264,7 @@ def adding_proposal_to_excel():
 
     bog_guest = tk.IntVar()
 
-
-
-
-    #Common Categories
+    #creates and packs checkbuttons
     C_enter = tk.Checkbutton(window, text='Enter',variable=enter, onvalue=1, offvalue=0, command=print_selection)
     C_enter.pack()
 
@@ -344,4 +317,6 @@ def adding_proposal_to_excel():
     C_bog_guest.pack()
     
     window.mainloop()
+
+
 adding_proposal_to_excel()
