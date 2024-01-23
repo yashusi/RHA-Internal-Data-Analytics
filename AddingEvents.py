@@ -31,6 +31,7 @@ POINT_VALUES = {
 "Poster/Flyer":10,
 "Paint Cube":50,
 "HeelLife Post":15,
+"CLE":25,
 
 "Guest at BOG":15,
 "OTM Submission":15,
