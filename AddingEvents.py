@@ -10,8 +10,8 @@ POINT_VALUES = {
 "Early Proposal":10,
 "Passive Program":30,
 "Social":25,
-"Educational":50,
-"Social Justice":75,
+"Educational":25,
+"Social Justice":25,
 "Traditional":100,
 
 "Faculty/Pro Involvement":25,
