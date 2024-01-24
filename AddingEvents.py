@@ -25,6 +25,7 @@ POINT_VALUES = {
 "BYO":10,
 "DIY Craft":10,
 "Appreciation Event":40,
+"Compost":10,
 
 "Social Media Post":10,
 "Email Listserv":5,
